@@ -50,7 +50,7 @@ const Human = mongoose.model('Human', HumanSchema)
 // const Venue = mongoose.model('Venue', VenueSchema)
 const Event = mongoose.model('Event', EventSchema)
 const Review = mongoose.model('Review', ReviewSchema)
-const Msg = mongoose.model('Msg', MsgSchema)
+// const Msg = mongoose.model('Msg', MsgSchema)
 
 module.exports = {
   Canine,
