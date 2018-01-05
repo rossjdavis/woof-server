@@ -48,7 +48,7 @@ const Review = mongoose.model('Review', ReviewSchema)
 module.exports = {
   Canine,
   Human,
-  Venue,
+  // Venue,
   Event,
   Review
 }
