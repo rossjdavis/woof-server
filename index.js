@@ -5,15 +5,25 @@ const sock_io = require('socket.io')
 // const parser = require('body-parser')
 // const cors = require('cors')
 
-const router = require('./router')
+// const router = require('./router')
 
 const { Canine } = require('./db/schema.js')
 
 const app = express()
-app.use(router)
 app.set('port', process.env.PORT || 3001)
 // app.use(parser.json())
 // app.use(cors())
+
+app.get('/', (req, res) => {
+  res.status(200).send({ response: 'Welcome Human' })
+  // Canine.find({})
+  //   .then(canines => {
+  //     res.status(200).send({ response: 'Welcome Human' })
+  //   })
+  // .catch(e => {
+  //   res.status(500).send({ error: e })
+  // })
+})
 
 const server = http.createServer(app)
 
