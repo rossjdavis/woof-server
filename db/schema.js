@@ -57,6 +57,6 @@ module.exports = {
   Human,
   // Venue,
   Event,
-  Review,
-  Msg
+  Review
+  // Msg
 }
