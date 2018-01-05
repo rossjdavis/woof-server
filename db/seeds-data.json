@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Kobe",
+    "breed": {
+      "one": "Bullboxer Pit",
+      "two": "Great Dane"
+    },
+    "birth": {
+      "m": 11,
+      "d": 19,
+      "y": 2015
+    },
+    "intro":
+      "I am a lovable, energetic puppy who just wants to play! I enjoy hiking with my humans and my favorite toy is a tennis ball. Looking for another high-energy pup to run around with."
+  }
+]

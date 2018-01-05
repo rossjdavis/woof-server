@@ -8,9 +8,10 @@ const CanineSchema = new Schema({
     one: String,
     two: String
   },
-  age: {
-    yr: Number,
-    mo: Number
+  birth: {
+    m: Number,
+    d: Number,
+    y: Number
   },
   intro: String,
   image: String,
