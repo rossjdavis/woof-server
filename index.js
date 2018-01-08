@@ -1,53 +1,60 @@
 const express = require('express')
 const http = require('http')
-const sock_io = require('socket.io')
-
-// const parser = require('body-parser')
-// const cors = require('cors')
-
-// const router = require('./router')
+const SocketIo = require('socket.io')
 
 const { Canine } = require('./db/schema.js')
 
 const app = express()
 app.set('port', process.env.PORT || 3001)
-// app.use(parser.json())
-// app.use(cors())
 
 app.get('/', (req, res) => {
   res.status(200).send({ response: 'Welcome Human' })
-  // Canine.find({})
-  //   .then(canines => {
-  //     res.status(200).send({ response: 'Welcome Human' })
-  //   })
-  // .catch(e => {
-  //   res.status(500).send({ error: e })
-  // })
 })
+
+const LOAD_ALL_DOGS = 'LOAD_ALL_DOGS'
+const REMOVE_CANINE = 'REMOVE_CANINE'
+const CREATE_CANINE = 'CREATE_CANINE'
 
 const server = http.createServer(app)
 
-const io = sock_io(server)
+const io = SocketIo(server)
 
-io.on('connection', socket => {})
+io.on('connection', socket => {
+  console.log('connection')
 
-// app.get('/api', (req, res) => {
-//   res.json('Up & Running!')
-// })
-//
-// app.get('/api/canines', (req, res) => {
-//   Canine.find({})
-//     .then(canines => {
-//       res.json(canines)
-//     })
-//     .catch(e => {
-//       res.status(500).json({ error: e })
-//     })
-// })
+  socket.on(LOAD_ALL_DOGS, payload => {
+    Canine.find({})
+      .then(canines => {
+        console.log('show doggies')
+        socket.emit(LOAD_ALL_DOGS, canines)
+      })
+      .catch(e => {
+        socket.emit('error', e)
+      })
+  })
 
-// app.listen(app.get('port'), () => {
-//   console.log('Lisening on port ' + app.get('port'))
-// })
+  socket.on(CREATE_CANINE, payload => {
+    Canine.create({ payload })
+      .then(canine => {
+        console.log('create doggy')
+        socket.broadcast.emit(CREATE_CANINE, canine)
+      })
+      .catch(e => {
+        socket.emit('error', e)
+      })
+  })
+
+  socket.on(REMOVE_CANINE, payload => {
+    Canine.findOneAndRmove({ _id: payload })
+      .then(canine => {
+        console.log('remove doggy')
+        socket.broadcast.emit(REMOVE_CANINE, canine)
+      })
+      .catch(e => {
+        socket.emit('error', e)
+      })
+  })
+})
 
 server.listen(app.get('port'), () => {
   console.log('Listening on port ' + app.get('port'))
