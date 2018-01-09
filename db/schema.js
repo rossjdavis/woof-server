@@ -4,41 +4,33 @@ const ObjectId = Schema.ObjectId
 
 const CanineSchema = new Schema({
   name: String,
-  breed: {
-    one: String,
-    two: String
-  },
-  birth: {
-    m: Number,
-    d: Number,
-    y: Number
-  },
+  born: String,
   intro: String,
   image: String,
   human: { type: ObjectId, ref: 'Human' }
 })
 
-const HumanSchema = new Schema({
-  name: String,
-  username: String,
-  password: String
-})
+// const HumanSchema = new Schema({
+//   name: String,
+//   username: String,
+//   password: String
+// })
 
 // const VenueSchema = new Schema({
 //   name: String,
 //   address: String
 // })
 
-const EventSchema = new Schema({
-  name: String,
-  date: String,
-  time: String
-})
+// const EventSchema = new Schema({
+//   name: String,
+//   date: String,
+//   time: String
+// })
 
-const ReviewSchema = new Schema({
-  rating: Number,
-  comment: String
-})
+// const ReviewSchema = new Schema({
+//   rating: Number,
+//   comment: String
+// })
 
 // const MsgSchema = new Schema({
 //   author: { type: ObjectId, ref: 'Human' },
@@ -47,17 +39,17 @@ const ReviewSchema = new Schema({
 // })
 
 const Canine = mongoose.model('Canine', CanineSchema)
-const Human = mongoose.model('Human', HumanSchema)
+// const Human = mongoose.model('Human', HumanSchema)
 // const Venue = mongoose.model('Venue', VenueSchema)
-const Event = mongoose.model('Event', EventSchema)
-const Review = mongoose.model('Review', ReviewSchema)
+// const Event = mongoose.model('Event', EventSchema)
+// const Review = mongoose.model('Review', ReviewSchema)
 // const Msg = mongoose.model('Msg', MsgSchema)
 
 module.exports = {
-  Canine,
-  Human,
+  Canine
+  // Human,
   // Venue,
-  Event,
-  Review
+  // Event,
+  // Review
   // Msg
 }

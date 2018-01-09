@@ -6,7 +6,6 @@ Canine.remove({}).then(() => {
     Canine.create(data)
       .then(data => {
         console.log(data)
-        process.exit()
       })
       .catch(err => {
         console.log(err)

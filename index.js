@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.status(200).send({ response: 'Welcome Human' })
 })
 
-const LOAD_ALL_DOGS = 'LOAD_ALL_DOGS'
+const REFRESH = 'REFRESH'
 const REMOVE_CANINE = 'REMOVE_CANINE'
 const CREATE_CANINE = 'CREATE_CANINE'
 
@@ -20,13 +20,11 @@ const server = http.createServer(app)
 const io = SocketIo(server)
 
 io.on('connection', socket => {
-  console.log('connection')
-
-  socket.on(LOAD_ALL_DOGS, payload => {
+  socket.on(REFRESH, payload => {
     Canine.find({})
       .then(canines => {
         console.log('show doggies')
-        socket.emit(LOAD_ALL_DOGS, canines)
+        socket.emit(REFRESH, canines)
       })
       .catch(e => {
         socket.emit('error', e)
@@ -34,9 +32,10 @@ io.on('connection', socket => {
   })
 
   socket.on(CREATE_CANINE, payload => {
-    Canine.create({ payload })
+    Canine.create(payload)
       .then(canine => {
-        console.log('create doggy')
+        console.log('create ' + payload)
+        socket.emit(CREATE_CANINE, canine)
         socket.broadcast.emit(CREATE_CANINE, canine)
       })
       .catch(e => {
@@ -45,9 +44,9 @@ io.on('connection', socket => {
   })
 
   socket.on(REMOVE_CANINE, payload => {
-    Canine.findOneAndRmove({ _id: payload })
+    Canine.findOneAndRemove({ _id: payload })
       .then(canine => {
-        console.log('remove doggy')
+        console.log('remove ' + payload)
         socket.broadcast.emit(REMOVE_CANINE, canine)
       })
       .catch(e => {

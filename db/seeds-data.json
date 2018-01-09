@@ -1,19 +1,34 @@
 [
   {
     "name": "Kobe",
-    "breed": {
-      "one": "Bullboxer Pit",
-      "two": "Great Dane"
-    },
-    "birth": {
-      "m": 11,
-      "d": 19,
-      "y": 2015
-    },
+    "born": "11-19-2015",
+    "breed": ["Bullboxer Pit", "Great Dane"],
+    "image": "https://i.imgur.com/YMN1iRq.jpg?1",
     "intro":
       "I am a lovable, energetic puppy who just wants to play! I enjoy hiking with my humans and my favorite toy is a tennis ball. Looking for another high-energy pup to run around with."
   },
   {
-    "name": "Test"
+    "name": "Kobe",
+    "born": "11-19-2015",
+    "breed": ["Bullboxer Pit", "Great Dane"],
+    "image": "https://i.imgur.com/YMN1iRq.jpg?1",
+    "intro":
+      "I am a lovable, energetic puppy who just wants to play! I enjoy hiking with my humans and my favorite toy is a tennis ball. Looking for another high-energy pup to run around with."
+  },
+  {
+    "name": "Kobe",
+    "born": "11-19-2015",
+    "breed": ["Bullboxer Pit", "Great Dane"],
+    "image": "https://i.imgur.com/YMN1iRq.jpg?1",
+    "intro":
+      "I am a lovable, energetic puppy who just wants to play! I enjoy hiking with my humans and my favorite toy is a tennis ball. Looking for another high-energy pup to run around with."
+  },
+  {
+    "name": "Kobe",
+    "born": "11-19-2015",
+    "breed": ["Bullboxer Pit", "Great Dane"],
+    "image": "https://i.imgur.com/YMN1iRq.jpg?1",
+    "intro":
+      "I am a lovable, energetic puppy who just wants to play! I enjoy hiking with my humans and my favorite toy is a tennis ball. Looking for another high-energy pup to run around with."
   }
 ]
