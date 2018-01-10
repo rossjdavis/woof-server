@@ -1,8 +1,10 @@
 const express = require('express')
 const http = require('http')
 const SocketIo = require('socket.io')
+const jwt = require('socket-io-jwt')
 
-const { Canine } = require('./db/schema.js')
+const { Canine } = require('./db/schema')
+const { Human } = requie('./db/schema')
 
 const app = express()
 app.set('port', process.env.PORT || 3001)
@@ -18,6 +20,27 @@ const CREATE_CANINE = 'CREATE_CANINE'
 const server = http.createServer(app)
 
 const io = SocketIo(server)
+
+io.use(
+  jwt.authenticate(
+    {
+      secret: 'kobe-face'
+    },
+    (payload, cb) => {
+      if (payload && payload.sub) {
+        Human.findOne({ _id: payload.sub })
+          .then(human => {
+            return !human ? cb(null, false, 'Invalid Human') : cb(null, human)
+          })
+          .catch(e => {
+            return cb(e)
+          })
+      } else {
+        return cb()
+      }
+    }
+  )
+)
 
 io.on('connection', socket => {
   socket.on(REFRESH, payload => {
