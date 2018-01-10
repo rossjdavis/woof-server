@@ -1,10 +1,10 @@
 const express = require('express')
 const http = require('http')
 const SocketIo = require('socket.io')
-const jwt = require('socket-io-jwt')
+const jwt = require('socketio-jwt-auth')
 
-const { Canine } = require('./db/schema')
-const { Human } = requie('./db/schema')
+const { Canine } = require('./db/schema.js')
+const { Human } = require('./db/schema.js')
 
 const app = express()
 app.set('port', process.env.PORT || 3001)
