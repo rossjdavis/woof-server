@@ -1,19 +1,37 @@
 const mongoose = require('./connection.js')
 const Schema = mongoose.Schema
 const ObjectId = Schema.ObjectId
+const bcrypt = require('bcrypt')
 
 const CanineSchema = new Schema({
   name: String,
   born: String,
   intro: String,
   image: String,
-  human: { type: ObjectId, ref: 'Human' }
+  user: { type: ObjectId, ref: 'User' }
 })
 
-const HumanSchema = new Schema({
+const UserSchema = new Schema({
   name: String,
   email: String,
-  pword: String
+  pw: String,
+  pwConf: String
+})
+
+// UserSchema.pre('save', next => {
+//   let user = this
+//   bcrypt.hash(user.pw, 10, (e, hash) => {
+//     if (e) {
+//       return next(e)
+//     }
+//     user.pw = hash
+//     next()
+//   })
+// })
+
+const SessionSchema = new Schema({
+  user: String,
+  token: String
 })
 
 // const VenueSchema = new Schema({
@@ -39,7 +57,8 @@ const HumanSchema = new Schema({
 // })
 
 const Canine = mongoose.model('Canine', CanineSchema)
-const Human = mongoose.model('Human', HumanSchema)
+const User = mongoose.model('User', UserSchema)
+// const Session = mongoose.model('Session', SessionSchema)
 // const Venue = mongoose.model('Venue', VenueSchema)
 // const Event = mongoose.model('Event', EventSchema)
 // const Review = mongoose.model('Review', ReviewSchema)
@@ -47,7 +66,8 @@ const Human = mongoose.model('Human', HumanSchema)
 
 module.exports = {
   Canine,
-  Human
+  User
+  // Session
   // Venue,
   // Event,
   // Review

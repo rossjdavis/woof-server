@@ -1,4 +1,4 @@
-const { Canine } = require('./schema.js')
+const { Canine, User, Session } = require('./schema.js')
 const seedData = require('./seeds-data.json')
 
 Canine.remove({}).then(() => {
@@ -12,3 +12,5 @@ Canine.remove({}).then(() => {
       })
   })
 })
+
+User.remove({})

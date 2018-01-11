@@ -1,48 +1,71 @@
 const express = require('express')
 const http = require('http')
-const SocketIo = require('socket.io')
-const jwt = require('socketio-jwt-auth')
+const ioServer = require('socket.io')
+// const jwt = require('socketio-jwt')
 
-const { Canine } = require('./db/schema.js')
-const { Human } = require('./db/schema.js')
+const { Canine, User } = require('./db/schema.js')
+
+const {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  REFRESH,
+  CREATE_CANINE,
+  REMOVE_CANINE
+} = require('./src/constants.js')
 
 const app = express()
+
 app.set('port', process.env.PORT || 3001)
 
 app.get('/', (req, res) => {
   res.status(200).send({ response: 'Welcome Human' })
 })
 
-const REFRESH = 'REFRESH'
-const REMOVE_CANINE = 'REMOVE_CANINE'
-const CREATE_CANINE = 'CREATE_CANINE'
-
 const server = http.createServer(app)
 
-const io = SocketIo(server)
-
-io.use(
-  jwt.authenticate(
-    {
-      secret: 'kobe-face'
-    },
-    (payload, cb) => {
-      if (payload && payload.sub) {
-        Human.findOne({ _id: payload.sub })
-          .then(human => {
-            return !human ? cb(null, false, 'Invalid Human') : cb(null, human)
-          })
-          .catch(e => {
-            return cb(e)
-          })
-      } else {
-        return cb()
-      }
-    }
-  )
-)
+const io = ioServer(server)
 
 io.on('connection', socket => {
+  Canine.find({})
+    .then(canines => {
+      console.log('show doggies')
+      socket.emit(REFRESH, canines)
+    })
+    .catch(e => {
+      socket.emit('error', e)
+    })
+
+  // socket.on(LOGIN_REQUEST, payload => {
+  //   if (payload.name === 'ross') {
+  //     jwt.authorize({
+  //       secret: 'kobe-face',
+  //       timeout: 15000
+  //     })
+  //   }
+  // })
+
+  // socket.on(LOGIN_REQUEST, payload => {
+  //   console.log(payload)
+  //   if (payload.name === 'ross')
+  //     bcrypt.hash(payload.name, 5, (e, hash) => {
+  //       if (e) {
+  //         return e
+  //       }
+  //       Session.create({ user: payload.name, token: hash })
+  //         .then(() => {
+  //           socket.emit(SET_SESSION, hash)
+  //         })
+  //         .catch(e => {
+  //           socket.emit('error', e)
+  //         })
+  //     })
+  // })
+
+  socket.on(LOGIN_REQUEST, payload => {
+    console.log('login request from ' + { payload })
+    socket.emit(LOGIN_SUCCESS, payload.name)
+  })
+
   socket.on(REFRESH, payload => {
     Canine.find({})
       .then(canines => {
