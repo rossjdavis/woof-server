@@ -63,7 +63,7 @@ io.on('connection', socket => {
 
   socket.on(LOGIN_REQUEST, payload => {
     console.log('login request from ' + { payload })
-    socket.emit(LOGIN_SUCCESS, payload.name)
+    socket.emit(LOGIN_SUCCESS, payload.email)
   })
 
   socket.on(REFRESH, payload => {
