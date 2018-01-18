@@ -93,6 +93,7 @@ io.on('connection', socket => {
     Canine.findOneAndRemove({ _id: payload })
       .then(canine => {
         console.log('remove ' + payload)
+        socket.emit(REMOVE_CANINE, canine)
         socket.broadcast.emit(REMOVE_CANINE, canine)
       })
       .catch(e => {

@@ -29,11 +29,6 @@ const UserSchema = new Schema({
 //   })
 // })
 
-const SessionSchema = new Schema({
-  user: String,
-  token: String
-})
-
 // const VenueSchema = new Schema({
 //   name: String,
 //   address: String
